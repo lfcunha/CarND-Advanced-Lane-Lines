@@ -3,20 +3,15 @@
 
 
 ![output](./report_images/output.png)
-<p align="center">
-    <img src="./report_images/videos.png" width="480" alt="output_image" /><br>
-    <b>result image(watch the full video below)</b><br>
-</p>
 
 
-##Introduction
+## Introduction
 
 
 The goal of this project is to write a software pipeline to identify the lane boundaries in a video.
 This is an "upgrade" to the first project on the methodology to detect lanes.
 
 ## Files:
-- [`advanced_lane_detection.ipynb`](advanced_lane_detection.ipynb) : ipython notebook explanning the pipeline
 - [`main.py`](main.py) : entry point to run the pipeline 
 - [`utils`](utils.py) : python file with all the functions used in the pipeline
  
