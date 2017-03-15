@@ -2,7 +2,7 @@
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
 
-![output](./report_images/output.png)
+![output](./output_images/output.png)
 
 
 ## Introduction
@@ -13,7 +13,7 @@ This is an "upgrade" to the first project on the methodology to detect lanes.
 
 ## Files:
 - [`main.py`](main.py) : entry point to run the pipeline 
-- [`utils`](utils.py) : python file with all the functions used in the pipeline
+- [`utils.py`](utils.py) : python file with all the functions used in the pipeline
  
  
 ## Goals: 
@@ -45,7 +45,7 @@ world units, or determine the location of the camera in the scene. ([mathworks d
   It returns, among other values, the cameraMatrix, and the distortion coefficients, which are used to undistort further 
   images collected from the same camera.
 
-![calibration](./report_images/calibration.png)
+![calibration](./output_images/calibration.png)
 
 2. ### Apply a distortion correction to raw images
 
@@ -53,7 +53,7 @@ The Calibration parameters from above can be used with  the function [cv2.undist
 to correct the distortion of raw images. Here's an example of a raw image (left), and a corrected image, using the calibration parameters
 from the camera calibration:
 
-![undistorted](./report_images/color_undistorted.png)
+![undistorted](./output_images/color_undistorted.png)
 
 
 3. ### Use color transforms, gradients, etc., to create a thresholded binary image.
@@ -61,7 +61,7 @@ from the camera calibration:
 Different color representations / channels provide better detection of different colors. Below, an image is broken down into
 the invididual channels of RBG, HSV, and LAB representations. I chose the B channel of LAB to capture the yellow line, while
 and a gray RGB image (all channels) to capture the white line. 
-![undistorted](./report_images/color_channels.png)
+![undistorted](./output_images/color_channels.png)
 
 In my pipeline, the undistorted image was thresholded (select pixels within certain range) + binarized in RGB(gray) and LAB/B  channels. 
 Pixel Coordinates were added to the output image if they were present (value 1 in binary image) in both images.
@@ -69,7 +69,7 @@ Pixel Coordinates were added to the output image if they were present (value 1 i
 In my code, the pre-process_image takes an image, and trapezoid coordinates for a mask, to limit the region where seaching for lines. The image is thresholded/binarized in each channel, and
 both outputs are combined, with the mask, to produce an image as such:
 <br>
-![threshold](./report_images/threshold.png)
+![threshold](./output_images/threshold.png)
 <b>
 
 ```python
@@ -90,7 +90,7 @@ it returns a birds-eye view of the image, obtained with the following cv functio
   cv2.warpPerspective(img, cv2.getPerspectiveTransform(src, dst), img.shape[::-1], flags=cv2.INTER_LINEAR)
 ```
 
-![perspective](./report_images/perspective.png)
+![perspective](./output_images/perspective.png)
 - Legend:
     - left: points to get perspective transformation matrix
     - right: birds-eye view (perspective transformation) of original image
@@ -108,20 +108,20 @@ it returns a birds-eye view of the image, obtained with the following cv functio
     I also used a Line class to keep track of the curve fitting coefficients, calculating the median over the last 10 images in order to smooth the curve and avoid jittering.
     
 Left and right line pixel search rectangles:
-![rectangles](./report_images/rectangles.png)
-![line_fits](./report_images/line_fits.png)
+![rectangles](./output_images/rectangles.png)
+![line_fits](./output_images/line_fits.png)
 
 6. ###  Determine the curvature of the lane and vehicle position with respect to center.
 
 The radius of the curve is calculated with the following formula:
 
-![curve_radius_formula](./report_images/curve_radius_formula.png)
+![curve_radius_formula](./output_images/curve_radius_formula.png)
 
 Given the line fit formular
-![line_fit_formula](./report_images/line_fit_formula.png)
+![line_fit_formula](./output_images/line_fit_formula.png)
 
 Curvature can be calculated as:
-![curve_from_line_fit_formula](./report_images/curve_from_line_fit_formula.png)
+![curve_from_line_fit_formula](./output_images/curve_from_line_fit_formula.png)
 
 
 - To do this calculation, the lane lines are refitted in inverted x, y - coordinates, which care recalculated from the binary lane line images.
@@ -138,7 +138,7 @@ An optimization would be to calculate the curve over the media of the last n fra
 The detected lanes were warped back into the original image. Additioanaly, lane curvature and deviation from center were written to the image.
 Furthermore, I also annotated the top of the image with the detected lanes, both in the original perspective, and the transformed birds-eye view.
 
-![video_output](./report_images/video_output.png)
+![video_output](./output_images/video_output.png)
 
 
 8. ### Pipeline (video)
